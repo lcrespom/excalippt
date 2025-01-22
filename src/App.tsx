@@ -4,7 +4,7 @@ import { AppState, BinaryFiles, ExcalidrawImperativeAPI } from '@excalidraw/exca
 import { useState } from 'react'
 
 import './App.css'
-import slides from './slides.json'
+import slides from './slides'
 
 const SCROLL_OPTIONS = { animate: true, duration: 1000, fitToViewport: true }
 
@@ -42,7 +42,8 @@ function App() {
   const [current, setCurrent] = useState<number>(-1)
 
   function changeFocusElement(inc: number) {
-    const nextPos = (current + inc) % slides.length
+    let nextPos = (current + inc) % slides.length
+    if (nextPos < 0) nextPos = slides.length - 1
     setCurrent(nextPos)
     scrollTo(nextPos, excalidrawAPI!)
   }
@@ -60,9 +61,6 @@ function App() {
     }
   }
 
-  if (excalidrawAPI) {
-    console.log('Init:', excalidrawAPI.getSceneElements())
-  }
   return (
     <main onKeyDown={checkKey}>
       <header>
