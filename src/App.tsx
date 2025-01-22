@@ -26,8 +26,21 @@ function changed(elements: readonly ExcalidrawElement[], appState: AppState, _fi
   }
 }
 
+function scrollTo(pos: number, exc: ExcalidrawImperativeAPI) {
+  const elems = exc.getSceneElements()
+  exc.scrollToContent(elems[pos], { animate: true })
+}
+
 function App() {
-  const [excalidrawAPI, setExcalidrawAPI] = useState<ExcalidrawImperativeAPI | null>(null)
+  const [excalidrawAPI, setExcalidrawAPI] = useState<ExcalidrawImperativeAPI>()
+  const [current, setCurrent] = useState<number>(-1)
+
+  function changeFocusElement(inc: number) {
+    const nextPos = current + inc
+    setCurrent(nextPos)
+    scrollTo(nextPos, excalidrawAPI!)
+  }
+
   if (excalidrawAPI) {
     console.log('Init:', excalidrawAPI.getSceneElements())
   }
@@ -39,6 +52,10 @@ function App() {
       <article>
         <Excalidraw excalidrawAPI={api => setExcalidrawAPI(api)} onChange={changed} />
       </article>
+      <footer>
+        <button onClick={() => changeFocusElement(-1)}>Prev</button>
+        <button onClick={() => changeFocusElement(+1)}>Next</button>
+      </footer>
     </main>
   )
 }
