@@ -31,9 +31,10 @@ function changed(elements: readonly ExcalidrawElement[], appState: AppState, _fi
 
 function scrollTo(pos: number, exc: ExcalidrawImperativeAPI) {
   const elems = exc.getSceneElements()
-  // if (typeof pos == 'number') pos = [pos]
-  // const selection = pos.map(p => elems[p])
-  exc.scrollToContent(elems[slides[pos]], SCROLL_OPTIONS)
+  let selPos: number | number[] = slides[pos]
+  if (typeof selPos == 'number') selPos = [selPos]
+  const selection = selPos.map(p => elems[p])
+  exc.scrollToContent(selection, SCROLL_OPTIONS)
 }
 
 function App() {
