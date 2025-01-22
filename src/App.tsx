@@ -20,6 +20,8 @@ function changed(elements: readonly ExcalidrawElement[], appState: AppState, _fi
     if (keys.length > 0) {
       const pos = elms.findIndex(e => e.id == keys[0])
       console.log('Selected element at position:', pos)
+    } else {
+      console.log('No selection')
     }
   }
 }
@@ -28,7 +30,6 @@ function App() {
   const [excalidrawAPI, setExcalidrawAPI] = useState<ExcalidrawImperativeAPI | null>(null)
   if (excalidrawAPI) {
     console.log('Init:', excalidrawAPI.getSceneElements())
-    // excalidrawAPI.onChange(elements => console.log('Change:', elements))
   }
   return (
     <main>
