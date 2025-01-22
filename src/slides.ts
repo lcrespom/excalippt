@@ -1,3 +1,5 @@
+// Slides at https://excalidraw.com/#json=vxXoJoXFcHSVfXv1XnxJ3,Xuofzm7pbBuZFvrCXINvyg
+
 const slides: Array<number | Array<number>> = [
   104, // Introduction
   106, // ----- Divider -----
@@ -14,7 +16,7 @@ const slides: Array<number | Array<number>> = [
   105, // ----- Divider -----
   108, // Terminal limitations
   109, // Approach
-  124, // Using HTTP
+  [123, 124], // Using HTTP
   [129, 131], // Main features
   [136, 138], // Customization
   139, // ----- Divider -----
