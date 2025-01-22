@@ -1,9 +1,10 @@
 import { Excalidraw } from '@excalidraw/excalidraw'
+import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types'
+import { AppState, BinaryFiles, ExcalidrawImperativeAPI } from '@excalidraw/excalidraw/types/types'
 import { useState } from 'react'
 
 import './App.css'
-import { AppState, BinaryFiles, ExcalidrawImperativeAPI } from '@excalidraw/excalidraw/types/types'
-import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types'
+import slides from './slides.json'
 
 const SCROLL_OPTIONS = { animate: true, duration: 1000, fitToViewport: true }
 
@@ -30,7 +31,9 @@ function changed(elements: readonly ExcalidrawElement[], appState: AppState, _fi
 
 function scrollTo(pos: number, exc: ExcalidrawImperativeAPI) {
   const elems = exc.getSceneElements()
-  exc.scrollToContent(elems[pos], SCROLL_OPTIONS)
+  // if (typeof pos == 'number') pos = [pos]
+  // const selection = pos.map(p => elems[p])
+  exc.scrollToContent(elems[slides[pos]], SCROLL_OPTIONS)
 }
 
 function App() {
@@ -38,7 +41,7 @@ function App() {
   const [current, setCurrent] = useState<number>(-1)
 
   function changeFocusElement(inc: number) {
-    const nextPos = current + inc
+    const nextPos = (current + inc) % slides.length
     setCurrent(nextPos)
     scrollTo(nextPos, excalidrawAPI!)
   }
